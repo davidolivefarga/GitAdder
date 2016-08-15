@@ -24,23 +24,26 @@ public class FileElement extends JPanel {
 	// ATTRIBUTES //
 	////////////////
 	
+	private FileSelectionPanel parentPanel;
+	
 	private JLabel fileLabel;
 	private JButton removeButton;
 	private Image buttonImage;
 	
-	private String labelText;
+	private String fileName;
 	private String filePath;
 	
 	/////////////////
 	// CONSTRUCTOR //
 	/////////////////
 	
-	public FileElement(String fileName, String fullPath) {
+	public FileElement(String name, String path, FileSelectionPanel parent) {
 		
 		super();
 		
-		labelText = fileName;
-		filePath = fullPath;
+		fileName = name;
+		filePath = path;
+		parentPanel = parent;
 		
 		initializeComponents();
 		configurateComponents();
@@ -55,7 +58,7 @@ public class FileElement extends JPanel {
 	
 	private void initializeComponents() {
 		
-		fileLabel = new JLabel(labelText);
+		fileLabel = new JLabel(fileName);
 		
 		try {
 			buttonImage = ImageIO.read(getClass().getResource("/images/removeIcon.png"));
@@ -92,7 +95,7 @@ public class FileElement extends JPanel {
 		removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("helooooooooooooooooooooooo");
+				parentPanel.removeElement(fileName, filePath);
 			}
 		});
 		
@@ -112,12 +115,16 @@ public class FileElement extends JPanel {
 	// SETTERS AND GETTERS //
 	/////////////////////////
 	
-	public JLabel getFileLabel() {
-		return fileLabel;
+	public String getFileName() {
+		return fileName;
 	}
 	
 	public String getFilePath() {
 		return filePath;
+	}
+	
+	public FileSelectionPanel getParentPanel() {
+		return parentPanel;
 	}
 	
 }

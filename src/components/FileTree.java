@@ -83,13 +83,13 @@ public class FileTree extends JPanel {
 					
 					File f = new File(filePath);
 					if (!f.isDirectory()) {
-						System.out.println("You clicked " + nodeName + " which has path " + filePath);
+						System.out.println("File " + nodeName + " with path " + filePath + " has been clicked");
 						if (!fileInfo.isSelected()) {
 							parentPanel.getParentPanel().getFileSelectionPanel().addElement(nodeName, filePath);
 							parentPanel.getParentPanel().getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, nodeName + GUIConstants.STATUS_BAR_PANEL_MESSAGE_SELECTED);
 							fileInfo.setSelected(true);
 						} else {
-							parentPanel.getParentPanel().getFileSelectionPanel().removeElement(nodeName);
+							parentPanel.getParentPanel().getFileSelectionPanel().removeElement(nodeName, filePath);
 							parentPanel.getParentPanel().getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, nodeName + GUIConstants.STATUS_BAR_PANEL_MESSAGE_REMOVED);
 							fileInfo.setSelected(false);
 						}
@@ -192,7 +192,7 @@ public class FileTree extends JPanel {
 	    }
 	}
 	
-	private class FileInfo {
+	public class FileInfo {
 		
         private String fileName;
         private String filePath;

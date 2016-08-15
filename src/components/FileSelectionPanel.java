@@ -8,13 +8,13 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class FileSelectionPanel extends JPanel {
@@ -127,23 +127,27 @@ public class FileSelectionPanel extends JPanel {
 
 	public void addElement(String fileName, String filePath) {
 
-		FileElement fileElement = new FileElement(fileName, filePath);
+		System.out.println("Adding file with name " + fileName + " and path " + filePath);
+		FileElement fileElement = new FileElement(fileName, filePath, this);
 		fileList.add(fileElement);
 		regenerateSelectedFiles();
 
 	}
 
-	public void removeElement(String fileName) {
+	public void removeElement(String fileName, String filePath) {
 
-		int l = fileList.size();
-		int elementPosition = -1;
-		for (int i=0; i<l; ++i) {
-			if (fileList.get(i).getFileLabel().getText().equals(fileName)) {
-				elementPosition = i;
-				break;
-			}
+		System.out.println("Removing file with name " + fileName + " and path " + filePath);
+		
+		Iterator<FileElement> it = fileList.iterator();
+		FileElement fileElement;
+		while (it.hasNext()) {
+			fileElement = it.next();
+		    if (fileElement.getFileName().equals(fileName) && fileElement.getFilePath().equals(filePath)) {
+		        it.remove();
+		        break;
+		    }
 		}
-		if (elementPosition != -1) fileList.remove(elementPosition);
+		
 		regenerateSelectedFiles();
 
 	}
@@ -152,18 +156,15 @@ public class FileSelectionPanel extends JPanel {
 
 		fileContainer.removeAll();
 
-		int l = fileList.size();
-		for (int i=0; i<l; ++i) {
-			final FileElement fileElement = fileList.get(i);
+		Iterator<FileElement> it = fileList.iterator();
+		FileElement fileElement;
+		while (it.hasNext()) {
+			fileElement = it.next();
 			fileContainer.add(fileElement);
-			fileContainer.revalidate();
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					fileElement.scrollRectToVisible(fileElement.getBounds());
-				}
-			});
+			fileElement.scrollRectToVisible(fileElement.getBounds());
 		}
+		fileContainer.revalidate();
+		fileContainer.repaint();
 
 	}
 

@@ -86,7 +86,7 @@ public class GUIConstants {
 	// Others
 	
 	public static Font APPLICATION_DEFAULT_FONT = new Font("Sans Serif", Font.BOLD, 12);
-	public static Font APPLICATION_STATUS_FONT = new Font("Sans Serif", Font.BOLD, 14);
+	public static Font APPLICATION_STATUS_FONT = new Font("Sans Serif", Font.BOLD, 12);
 	
 	public static Color APPLICATION_SUCCESS_COLOR = new Color(0,178,0);
 	public static Color APPLICATION_FAILURE_COLOR = new Color(100,0,0);
