@@ -161,6 +161,7 @@ public class FileTree extends JPanel {
 		return curDir;
 		
 	}
+
 	
 	/////////////////////////
 	// SETTERS AND GETTERS //
@@ -183,13 +184,18 @@ public class FileTree extends JPanel {
 
 	    	DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
 	        FileInfo nodeInfo = (FileInfo)node.getUserObject();
-	        File f = new File(nodeInfo.getFilePath());
+	        //String fileName = nodeInfo.toString();
+	        String filePath = nodeInfo.getFilePath();
+	        File f = new File(filePath);
+	        
 	        if (!f.isDirectory() && nodeInfo.isSelected()) {
 	            setForeground(GUIConstants.FILE_TREE_PANEL_SELECTED_F_COLOR);
 	        }
-
+	        
 	        return this;
+	        
 	    }
+	    
 	}
 	
 	public class FileInfo {

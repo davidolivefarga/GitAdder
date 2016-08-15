@@ -128,6 +128,7 @@ public class FileSelectionPanel extends JPanel {
 	public void addElement(String fileName, String filePath) {
 
 		System.out.println("Adding file with name " + fileName + " and path " + filePath);
+		
 		FileElement fileElement = new FileElement(fileName, filePath, this);
 		fileList.add(fileElement);
 		regenerateSelectedFiles();
@@ -147,9 +148,22 @@ public class FileSelectionPanel extends JPanel {
 		        break;
 		    }
 		}
-		
 		regenerateSelectedFiles();
 
+	}
+	
+	public boolean containsElement(String fileName, String filePath) {
+		
+		Iterator<FileElement> it = fileList.iterator();
+		FileElement fileElement;
+		while (it.hasNext()) {
+			fileElement = it.next();
+		    if (fileElement.getFileName().equals(fileName) && fileElement.getFilePath().equals(filePath)) {
+		    	return true;
+		    }
+		}
+		return false;
+		
 	}
 
 	private void regenerateSelectedFiles() {

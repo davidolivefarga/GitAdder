@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -28,7 +29,9 @@ public class FileElement extends JPanel {
 	
 	private JLabel fileLabel;
 	private JButton removeButton;
+	
 	private Image buttonImage;
+	private Image buttonImageSelected;
 	
 	private String fileName;
 	private String filePath;
@@ -62,9 +65,10 @@ public class FileElement extends JPanel {
 		
 		try {
 			buttonImage = ImageIO.read(getClass().getResource("/images/removeIcon.png"));
+			buttonImageSelected = ImageIO.read(getClass().getResource("/images/removeIconSelected.png"));
 			removeButton = new JButton(new ImageIcon(buttonImage));
 		} catch (IOException ex) {
-			System.out.println("Button image not found");
+			System.out.println("Button images not found");
 			removeButton = new JButton();
 		}
 		
@@ -97,6 +101,15 @@ public class FileElement extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				parentPanel.removeElement(fileName, filePath);
 			}
+		});
+		
+		removeButton.addMouseListener(new MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	removeButton.setIcon(new ImageIcon(buttonImageSelected));
+		    }
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	removeButton.setIcon(new ImageIcon(buttonImage));
+		    }
 		});
 		
 	}
