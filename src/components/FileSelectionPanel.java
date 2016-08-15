@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 @SuppressWarnings("serial")
 public class FileSelectionPanel extends JPanel {
@@ -91,7 +92,7 @@ public class FileSelectionPanel extends JPanel {
 		clearButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removeAll();
+				removeAllSelectedElements();
 			}
 		});
 		
@@ -101,17 +102,6 @@ public class FileSelectionPanel extends JPanel {
 				
 			}
 		});
-		
-	}
-	
-	public void removeAll() {
-		
-		fileContainer.removeAll();
-		fileContainer.revalidate();
-		
-		fileList.clear();
-		
-		parentPanel.getFileTreePanel().generateTree();
 		
 	}
 
@@ -125,17 +115,27 @@ public class FileSelectionPanel extends JPanel {
 
 	}
 
-	public void addElement(String fileName, String filePath) {
+	public void addElement(DefaultMutableTreeNode node) {
 
+		FileTree.FileInfo fileInfo = (FileTree.FileInfo)node.getUserObject();
+		String fileName = fileInfo.toString();
+		String filePath = fileInfo.getFilePath();
+		
 		System.out.println("Adding file with name " + fileName + " and path " + filePath);
 		
-		FileElement fileElement = new FileElement(fileName, filePath, this);
+		FileElement fileElement = new FileElement(node, this);
 		fileList.add(fileElement);
+		fileInfo.setSelected(true);
+		parentPanel.getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, fileName + GUIConstants.STATUS_BAR_PANEL_MESSAGE_SELECTED);
 		regenerateSelectedFiles();
 
 	}
 
-	public void removeElement(String fileName, String filePath) {
+	public void removeElement(DefaultMutableTreeNode node) {
+		
+		FileTree.FileInfo fileInfo = (FileTree.FileInfo)node.getUserObject();
+		String fileName = fileInfo.toString();
+		String filePath = fileInfo.getFilePath();
 
 		System.out.println("Removing file with name " + fileName + " and path " + filePath);
 		
@@ -148,21 +148,43 @@ public class FileSelectionPanel extends JPanel {
 		        break;
 		    }
 		}
+		fileInfo.setSelected(false);
+		parentPanel.getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, fileName + GUIConstants.STATUS_BAR_PANEL_MESSAGE_REMOVED);
+		parentPanel.getFileTreePanel().getFileTree().refreshFileTree();
 		regenerateSelectedFiles();
 
 	}
 	
-	public boolean containsElement(String fileName, String filePath) {
+	public void removeAllElements() {
+		
+		fileContainer.removeAll();
+		fileContainer.revalidate();
+		
+		fileList.clear();
+		
+		parentPanel.getFileTreePanel().generateTree();
+		
+	}
+	
+	public void removeAllSelectedElements() {
+		
+		System.out.println("Removing all selected files");
 		
 		Iterator<FileElement> it = fileList.iterator();
 		FileElement fileElement;
+		DefaultMutableTreeNode node;
+		FileTree.FileInfo fileInfo;
 		while (it.hasNext()) {
 			fileElement = it.next();
-		    if (fileElement.getFileName().equals(fileName) && fileElement.getFilePath().equals(filePath)) {
-		    	return true;
-		    }
+			node = fileElement.getNode();
+			fileInfo = (FileTree.FileInfo)node.getUserObject();
+			fileInfo.setSelected(false);
+			it.remove();
 		}
-		return false;
+		
+		parentPanel.getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, GUIConstants.STATUS_BAR_PANEL_MESSAGE_ALL_REMOVED);
+		regenerateSelectedFiles();
+		parentPanel.getFileTreePanel().getFileTree().refreshFileTree();
 		
 	}
 

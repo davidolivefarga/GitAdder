@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 @SuppressWarnings("serial")
 public class FileElement extends JPanel {
@@ -26,6 +27,7 @@ public class FileElement extends JPanel {
 	////////////////
 	
 	private FileSelectionPanel parentPanel;
+	private DefaultMutableTreeNode node;
 	
 	private JLabel fileLabel;
 	private JButton removeButton;
@@ -40,14 +42,17 @@ public class FileElement extends JPanel {
 	// CONSTRUCTOR //
 	/////////////////
 	
-	public FileElement(String name, String path, FileSelectionPanel parent) {
+	public FileElement(DefaultMutableTreeNode associatedNode, FileSelectionPanel parent) {
 		
 		super();
 		
-		fileName = name;
-		filePath = path;
+		node = associatedNode;
 		parentPanel = parent;
 		
+		FileTree.FileInfo fileInfo = (FileTree.FileInfo)node.getUserObject();
+		fileName = fileInfo.toString();
+		filePath = fileInfo.getFilePath();
+
 		initializeComponents();
 		configurateComponents();
 		addListeners();
@@ -99,7 +104,7 @@ public class FileElement extends JPanel {
 		removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				parentPanel.removeElement(fileName, filePath);
+				parentPanel.removeElement(node);
 			}
 		});
 		
@@ -138,6 +143,10 @@ public class FileElement extends JPanel {
 	
 	public FileSelectionPanel getParentPanel() {
 		return parentPanel;
+	}
+	
+	public DefaultMutableTreeNode getNode() {
+		return node;
 	}
 	
 }

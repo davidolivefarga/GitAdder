@@ -82,6 +82,7 @@ public class GUIConstants {
 	
 	public static String STATUS_BAR_PANEL_MESSAGE_SELECTED = " has been successfully added to selected files";
 	public static String STATUS_BAR_PANEL_MESSAGE_REMOVED = " has been successfully removed from selected files";
+	public static String STATUS_BAR_PANEL_MESSAGE_ALL_REMOVED = "All files have been successfully removed from selected files";
 	
 	// Others
 	

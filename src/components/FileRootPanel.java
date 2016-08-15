@@ -100,7 +100,7 @@ public class FileRootPanel extends JPanel {
 				    File selectedFile = fileChooser.getSelectedFile();
 				    if (selectedFile.isDirectory()) {
 				    	 textField.setText(selectedFile.getAbsolutePath());
-				    	 parentPanel.getFileSelectionPanel().removeAll();
+				    	 parentPanel.getFileSelectionPanel().removeAllElements();
 				    	 parentPanel.getFileTreePanel().generateTree();
 				    	 parentPanel.getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, GUIConstants.STATUS_BAR_PANEL_MESSAGE_SUCCESS_ROOT);
 				    }

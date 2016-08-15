@@ -30,9 +30,15 @@ public class ApplicationController {
 	// METHODS //
 	/////////////
 	
-	public void configureController() {
+	public void initializeController() {
 		
 		screen = new ApplicationGUI(GUIConstants.APPLICATION_TITLE);
+		
+	}
+	
+	public void showApplication(boolean b) {
+		
+		screen.setVisible(b);
 		
 	}
 	

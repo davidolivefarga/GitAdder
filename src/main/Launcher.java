@@ -11,7 +11,8 @@ public class Launcher  {
 	public static void main (String[] args) {
 		
 		ApplicationController controller = ApplicationController.getInstance();
-		controller.configureController();
+		controller.initializeController();
+		controller.showApplication(true);
 		
 	}
 

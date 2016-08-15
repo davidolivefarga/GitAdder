@@ -35,7 +35,6 @@ public class ApplicationGUI extends JFrame {
 		initializeComponents();
 		configureComponents();
 		buildComponents();
-		showGUI();
 		
 	}
 	
@@ -57,6 +56,8 @@ public class ApplicationGUI extends JFrame {
 	private void configureComponents() {
 		
 		this.setBackground(GUIConstants.MAIN_FRAME_COLOR);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 		
 		mainPanel.setBackground(GUIConstants.MAIN_FRAME_COLOR);
 		mainPanel.setPreferredSize(new Dimension(GUIConstants.MAIN_FRAME_WIDTH, GUIConstants.MAIN_FRAME_LENGTH));
@@ -71,15 +72,8 @@ public class ApplicationGUI extends JFrame {
 		mainPanel.add(fileSelectionPanel, BorderLayout.EAST);
 		mainPanel.add(statusBarPanel, BorderLayout.SOUTH);
 		
-	}
-	
-	private void showGUI() {
-		
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
-		this.setResizable(false);
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
 		
 	}
 

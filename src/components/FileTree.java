@@ -75,6 +75,7 @@ public class FileTree extends JPanel {
 			public void valueChanged(TreeSelectionEvent e) {
 				
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+				
 				if (node!=null) {
 					
 					FileInfo fileInfo = (FileInfo)node.getUserObject();
@@ -85,13 +86,9 @@ public class FileTree extends JPanel {
 					if (!f.isDirectory()) {
 						System.out.println("File " + nodeName + " with path " + filePath + " has been clicked");
 						if (!fileInfo.isSelected()) {
-							parentPanel.getParentPanel().getFileSelectionPanel().addElement(nodeName, filePath);
-							parentPanel.getParentPanel().getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, nodeName + GUIConstants.STATUS_BAR_PANEL_MESSAGE_SELECTED);
-							fileInfo.setSelected(true);
+							parentPanel.getParentPanel().getFileSelectionPanel().addElement(node);
 						} else {
-							parentPanel.getParentPanel().getFileSelectionPanel().removeElement(nodeName, filePath);
-							parentPanel.getParentPanel().getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, nodeName + GUIConstants.STATUS_BAR_PANEL_MESSAGE_REMOVED);
-							fileInfo.setSelected(false);
+							parentPanel.getParentPanel().getFileSelectionPanel().removeElement(node);
 						}
 					}
 					
@@ -107,6 +104,13 @@ public class FileTree extends JPanel {
 		
 		scrollPane.getViewport().add(tree);
 		this.add(BorderLayout.CENTER, scrollPane);
+		
+	}
+	
+	public void refreshFileTree() {
+		
+		tree.revalidate();
+		tree.repaint();
 		
 	}
 
@@ -169,6 +173,10 @@ public class FileTree extends JPanel {
 	
 	public FileTreePanel getParentPanel() {
 		return parentPanel;
+	}
+	
+	public JTree getTree() {
+		return tree;
 	}
 	
 	///////////////////
