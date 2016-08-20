@@ -7,6 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -99,7 +102,18 @@ public class FileSelectionPanel extends JPanel {
 		executeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				String projectFolder = System.getProperty("user.dir");
+				String outputFolder = projectFolder.substring(0, projectFolder.lastIndexOf("\\"));
+				File outputFile = new File(outputFolder + "//gitAdderOutput.txt");
+				FileWriter writer;
+				try {
+					writer = new FileWriter(outputFile);
+					writer.write(generateOutputData(outputFolder));
+					writer.close();
+					parentPanel.getStatusBarPanel().updateStatus(GUIConstants.SUCCESS, GUIConstants.FILE_SELECTION_PANEL_OUTPUT_OK);
+				} catch (IOException e1) {
+					parentPanel.getStatusBarPanel().updateStatus(GUIConstants.FAILURE, GUIConstants.FILE_SELECTION_PANEL_OUTPUT_KO);
+				}	
 			}
 		});
 		
@@ -201,6 +215,38 @@ public class FileSelectionPanel extends JPanel {
 		}
 		fileContainer.revalidate();
 		fileContainer.repaint();
+
+	}
+	
+	private String generateOutputData(String outputFolder) {
+		
+		String lSkip = System.getProperty("line.separator");
+		String dlSkip = lSkip+lSkip;
+		
+		StringBuffer sBuffer = new StringBuffer();
+		sBuffer.append("FOLLOW THESE INSTRUCTIONS TO COMMIT THE SELECTED FILES " + lSkip);
+		sBuffer.append("-------------------------------------------------------" + dlSkip);
+		sBuffer.append("1) Open a command window and write the following instruction:" + dlSkip);
+		sBuffer.append("cd " + outputFolder + dlSkip);
+		sBuffer.append("2) Write the following instruction to prepare all selected files:" + dlSkip);
+		sBuffer.append("git add");
+		
+		Iterator<FileElement> it = fileList.iterator();
+		FileElement fileElement;
+		String absolutePath;
+		String relativePath;
+		while (it.hasNext()) {
+			fileElement = it.next();
+			absolutePath = fileElement.getFilePath();
+			relativePath = absolutePath.substring(outputFolder.length()+1);
+			sBuffer.append(" " + relativePath);
+		}
+		
+		sBuffer.append(dlSkip);
+		sBuffer.append("3) Execute the git commit instruction with your own message:" + dlSkip);
+		sBuffer.append("git commit -m <insert your commit message here>");
+		
+		return sBuffer.toString();
 
 	}
 

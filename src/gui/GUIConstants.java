@@ -42,7 +42,7 @@ public class GUIConstants {
 	// File selection panel constants
 	
 	public static Color FILE_SELECTION_PANEL_COLOR = Color.WHITE;
-	public static int FILE_SELECTION_PANEL_WIDTH = 400;
+	public static int FILE_SELECTION_PANEL_WIDTH = 380;
 	public static int FILE_SELECTION_PANEL_LENGTH = 480;
 	
 	public static Color FILE_SELECTION_PANEL_CONTAINER_1_COLOR = Color.WHITE;
@@ -50,14 +50,17 @@ public class GUIConstants {
 	public static Color FILE_SELECTION_PANEL_CONTAINER_2_COLOR = Color.WHITE;
 	
 	public static String FILE_SELECTION_PANEL_BUTTON_1_TEXT = "Clear all";
-	public static String FILE_SELECTION_PANEL_BUTTON_2_TEXT = "Execute";
+	public static String FILE_SELECTION_PANEL_BUTTON_2_TEXT = "Generate";
+	
+	public static String FILE_SELECTION_PANEL_OUTPUT_OK = "The output file gitAdderOutput.txt has been successfully generated!";
+	public static String FILE_SELECTION_PANEL_OUTPUT_KO = "The generation of output file gitAdderOutput.txt failed";
 	
 	// File element constants
 	
-	public static int FILE_ELEMENT_WIDTH = 355;
+	public static int FILE_ELEMENT_WIDTH = 335;
 	public static int FILE_ELEMENT_LENGTH = 35;
 	
-	public static int FILE_ELEMENT_LABEL_WIDTH = 295;
+	public static int FILE_ELEMENT_LABEL_WIDTH = 275;
 	public static int FILE_ELEMENT_LABEL_LENGTH = 30;
 	
 	public static int FILE_ELEMENT_BUTTON_WIDTH = 25;
